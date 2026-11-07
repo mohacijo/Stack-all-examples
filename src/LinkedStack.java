@@ -1,0 +1,37 @@
+
+import java.util.EmptyStackException;
+
+public class LinkedStack<T> {
+    private int count;
+    private node<T> top;
+
+    public LinkedStack() {
+        count = 0;
+        top = null;
+    }
+
+    public void push(T element) {
+        node<T> temp = new node<>(element);        // 1. new node
+        temp.setNext(top);                         // 2. link it to old top FIRST
+        top = temp;                                // 3. then move top
+        count++;
+    }
+
+    public T pop() throws EmptyStackException {
+        if (isEmpty())
+            throw new EmptyStackException();
+        T result = top.getElement();
+        top = top.getNext();                 // old top is now unreferenced
+        count--;
+        return result;
+    }
+
+    public T peek() throws EmptyStackException {
+        if (isEmpty())
+            throw new EmptyStackException();
+        return top.getElement();
+    }
+
+    public boolean isEmpty() { return count == 0; }
+    public int size()        { return count; }
+}
